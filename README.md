@@ -8,8 +8,8 @@
 This BTD6 mod adds custom towers to the game.
 
 Included towers:
-* Upgradeable Legend of the Night
-* More towers will be added soon!
+- Upgradeable Legend of the Night
+- More towers will be added soon!
 
 Modding BTD6 always comes with the risk of getting flagged!
 
