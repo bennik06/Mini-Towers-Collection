@@ -5,11 +5,13 @@
 
 <h1 align="center">MiniTowersCollection</h1>
 
-This BTD6 mod adds custom towers to the game.
+This BTD6 mod adds custom towers and a new tower category to the game.
 
 Included towers:
 - Upgradeable Legend of the Night
-- More towers will be added soon!
+- Mr Stickman's personal tower
+
+More towers will be added soon!
 
 Modding BTD6 always comes with the risk of getting flagged!
 
