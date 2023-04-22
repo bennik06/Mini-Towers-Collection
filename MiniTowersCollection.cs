@@ -141,7 +141,7 @@ public class MiniTowersCollection : BloonsTD6Mod
             public override void ApplyUpgrade(TowerModel towerModel)
             {
                 towerModel.range = towerModel.GetAttackModel().range *= 1.1f;
-                towerModel.GetWeapon().rate *= 0.9f;//1 ÷ 1.1 = 0.90909...
+                towerModel.GetWeapon().rate *= 0.9f;//1 Ã· 1.1 = 0.90909...
                 towerModel.GetWeapon().projectile.pierce *= 1.1f;
                 towerModel.GetWeapon().projectile.GetDamageModel().damage *= 1.1f;
             }
@@ -236,7 +236,7 @@ public class MiniTowersCollection : BloonsTD6Mod
             public override int Path => BOTTOM;
             public override int Tier => 5;
             public override string DisplayName => "Solar Eruption";
-            public override string Description => "ability: shoots 24 deadly sun beams in a 360° angle";
+            public override string Description => "ability: shoots 24 deadly sun beams in a 360Â° angle";
             public override int Cost => 415550;
             public override void ApplyUpgrade(TowerModel towerModel)
             {
@@ -288,7 +288,7 @@ public class MiniTowersCollection : BloonsTD6Mod
             public override int Path => MIDDLE;
             public override int Tier => 1;
             public override string DisplayName => "Ninja Discipline";
-            public override string Description => "All attacks gain +61.2% attack speed (0.62x attack cooldown) and range increases by +7.";
+            public override string Description => "Increases attack range and attack speed.";
             public override int Cost => 300;
             public override void ApplyUpgrade(TowerModel towerModel)
             {
