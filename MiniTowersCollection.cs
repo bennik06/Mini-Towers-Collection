@@ -50,7 +50,13 @@ public class MiniTowersCollection : BloonsTD6Mod
             public override int MiddlePathUpgrades => 2;
             public override int BottomPathUpgrades => 5;
             public override bool IsValidCrosspath(int[] tiers) => ModHelper.HasMod("UltimateCrosspathing") || base.IsValidCrosspath(tiers);
-            public override void ModifyBaseTowerModel(TowerModel towerModel) { }
+            public override void ModifyBaseTowerModel(TowerModel towerModel)
+            {
+                towerModel.ignoreBlockers = true;
+                towerModel.GetWeapon().projectile.ignoreBlockers = true;
+                towerModel.GetWeapon().projectile.canCollisionBeBlockedByMapLos = false;
+                towerModel.GetAttackModel().attackThroughWalls = true;
+            }
             public override string Icon => VanillaSprites.SuperMonkey005;
             public override string Portrait => VanillaSprites.SuperMonkey005;
         }
@@ -136,12 +142,12 @@ public class MiniTowersCollection : BloonsTD6Mod
             public override int Path => BOTTOM;
             public override int Tier => 1;
             public override string DisplayName => "Better Legend";
-            public override string Description => "all stats +10%";
+            public override string Description => "Legend of the Night but stronger.";
             public override int Cost => 103888;
             public override void ApplyUpgrade(TowerModel towerModel)
             {
                 towerModel.range = towerModel.GetAttackModel().range *= 1.1f;
-                towerModel.GetWeapon().rate *= 0.9f;//1 Ã· 1.1 = 0.90909...
+                towerModel.GetWeapon().rate *= 0.9f;//1 ÷ 1.1 = 0.90909...
                 towerModel.GetWeapon().projectile.pierce *= 1.1f;
                 towerModel.GetWeapon().projectile.GetDamageModel().damage *= 1.1f;
             }
@@ -151,7 +157,7 @@ public class MiniTowersCollection : BloonsTD6Mod
             public override int Path => BOTTOM;
             public override int Tier => 2;
             public override string DisplayName => "Golden Shuriken";
-            public override string Description => "+50% pierce +50% damage";
+            public override string Description => "High pierce golden shurikens deal way more damage.";
             public override int Cost => 207777;
             public override void ApplyUpgrade(TowerModel towerModel)
             {
@@ -183,7 +189,7 @@ public class MiniTowersCollection : BloonsTD6Mod
             public override int Path => BOTTOM;
             public override int Tier => 3;
             public override string DisplayName => "Golden Cape";
-            public override string Description => "+25% range +25% pierce, +500 moab damage";
+            public override string Description => "The golden cape makes the legend a master of MOAB destruction.";
             public override int Cost => 311666;
             public override void ApplyUpgrade(TowerModel towerModel)
             {
@@ -191,7 +197,6 @@ public class MiniTowersCollection : BloonsTD6Mod
                 towerModel.GetAbilities()[1].icon = GetSpriteReference(mod, "Ability1_Legend");
 
                 towerModel.range = towerModel.GetAttackModel().range *= 1.25f;
-                towerModel.GetWeapon().projectile.pierce *= 1.25f;
                 towerModel.GetWeapon().projectile.AddBehavior(new DamageModifierForTagModel("DamageModifierForTagModel", "Moabs", 1, 500, false, true));
             }
             internal class Bottom3Display_Legend : ModDisplay
@@ -209,7 +214,7 @@ public class MiniTowersCollection : BloonsTD6Mod
             public override int Path => BOTTOM;
             public override int Tier => 4;
             public override string DisplayName => "Golden Legend";
-            public override string Description => "all stats doubled (except range and rate), +5000 moab damage";
+            public override string Description => "Every bloon fears the Golden Gegend...";
             public override int Cost => 415550;
             public override void ApplyUpgrade(TowerModel towerModel)
             {
@@ -236,7 +241,7 @@ public class MiniTowersCollection : BloonsTD6Mod
             public override int Path => BOTTOM;
             public override int Tier => 5;
             public override string DisplayName => "Solar Eruption";
-            public override string Description => "ability: shoots 24 deadly sun beams in a 360Â° angle";
+            public override string Description => "Ability: Shoots 24 deadly sun beams in a 360° angle!";
             public override int Cost => 415550;
             public override void ApplyUpgrade(TowerModel towerModel)
             {
@@ -260,7 +265,7 @@ public class MiniTowersCollection : BloonsTD6Mod
 
                 Ability.GetBehavior<ActivateAttackModel>().attacks = attack;
                 Ability.maxActivationsPerRound = 9999999;
-                Ability.cooldown = 30;
+                Ability.cooldown = 45;
                 Ability.icon = GetSpriteReference("Bottom5_Legend-Icon");
 
                 towerModel.AddBehavior(Ability);
@@ -293,7 +298,7 @@ public class MiniTowersCollection : BloonsTD6Mod
             public override void ApplyUpgrade(TowerModel towerModel)
             {
                 towerModel.ApplyDisplay<Middle1Display_MrStickman>();
-                
+
                 towerModel.AddBehavior(new OverrideCamoDetectionModel("OverrideCamoDetectionModel", true));
                 towerModel.towerSelectionMenuThemeId = "Camo";
                 towerModel.range = towerModel.GetAttackModel().range += 7;
@@ -321,7 +326,7 @@ public class MiniTowersCollection : BloonsTD6Mod
             public override void ApplyUpgrade(TowerModel towerModel)
             {
                 towerModel.ApplyDisplay<Middle2Display_MrStickman>();
-                
+
                 towerModel.GetWeapon().projectile.AddBehavior(Game.instance.model.GetTowerFromId("EngineerMonkey-002").GetWeapon().projectile.GetBehavior<SlowOnPopModel>().Duplicate());
                 towerModel.GetWeapon().projectile.collisionPasses = new int[] { 0, -1 };
             }
@@ -346,7 +351,7 @@ public class MiniTowersCollection : BloonsTD6Mod
             public override void ApplyUpgrade(TowerModel towerModel)
             {
                 towerModel.ApplyDisplay<Middle3Display_MrStickman>();
-                
+
                 towerModel.GetWeapon().projectile.GetBehavior<TravelStraitModel>().lifespan = 2;
                 towerModel.GetWeapon().projectile.pierce += 99; //extra bounce monkey knowledge
                 towerModel.GetWeapon().projectile.AddBehavior(Game.instance.model.GetTowerFromId("BoomerangMonkey-300").GetWeapon().projectile.GetBehavior<RetargetOnContactModel>().Duplicate());
@@ -374,7 +379,7 @@ public class MiniTowersCollection : BloonsTD6Mod
             public override void ApplyUpgrade(TowerModel towerModel)
             {
                 towerModel.ApplyDisplay<Middle4Display_MrStickman>();
-                
+
                 towerModel.GetWeapon().projectile.GetDamageModel().damage += 10;
                 towerModel.GetWeapon().projectile.GetDamageModel().immuneBloonProperties = BloonProperties.None;
                 towerModel.GetWeapon().projectile.AddBehavior(Game.instance.model.GetTowerFromId("SniperMonkey-400").GetWeapon().projectile.GetBehavior<SlowMaimMoabModel>().Duplicate());
@@ -400,14 +405,13 @@ public class MiniTowersCollection : BloonsTD6Mod
             public override void ApplyUpgrade(TowerModel towerModel)
             {
                 towerModel.ApplyDisplay<Middle5Display_MrStickman>();
-                
+
                 towerModel.range = towerModel.GetAttackModel().range += 10;
                 towerModel.GetWeapon().rate *= 0.5f;
                 towerModel.GetWeapon().projectile.GetDamageModel().damage += 1;
                 towerModel.GetWeapon().emission = new ArcEmissionModel("ArcEmissionModel", 9, 0, 72, null, false); //deadly tranquility monkey knowledge
             }
             public override string Icon => "GrandmasterNinjaUpgradeIcon";
-
             internal class Middle5Display_MrStickman : ModDisplay
             {
                 public override string BaseDisplay => "5997a2a57b894734286d05f054d6f91b";
@@ -415,7 +419,160 @@ public class MiniTowersCollection : BloonsTD6Mod
                 {
                     SetMeshTexture(node, Name);
                     SetMeshTexture(node, Name, 1);
-                   SetMeshOutlineColor(node, new Color(0 / 255, 0 / 255, 0 / 255), 1);
+                    SetMeshOutlineColor(node, new Color(0 / 255, 0 / 255, 0 / 255), 1);
+                }
+            }
+        }
+    }
+    public class Tobyman009Tower
+    {
+        public class Tobyman009 : ModTower<MiniTower>
+        {
+            public override string BaseTower => "SniperMonkey";
+            public override string DisplayName => "Tobyman009 Tower";
+            public override string Description => "Tobyman009's personal tower.";
+            public override int Cost => 350;
+            public override int TopPathUpgrades => 0;
+            public override int MiddlePathUpgrades => 5;
+            public override int BottomPathUpgrades => 0;
+            public override void ModifyBaseTowerModel(TowerModel towerModel) { }
+            public override string Icon => VanillaSprites.SniperMonkey000;
+            public override string Portrait => VanillaSprites.SniperMonkey000;
+        }
+        public class Middle1_Tobyman009 : ModUpgrade<Tobyman009>
+        {
+            public override int Path => MIDDLE;
+            public override int Tier => 1;
+            public override string DisplayName => "Twin Guns";
+            public override string Description => "Added twin gun doubles attack speed. Enhances Ballistic Missile and Bloontonium Reactor.";
+            public override int Cost => 450;
+            public override void ApplyUpgrade(TowerModel towerModel)
+            {
+                towerModel.ApplyDisplay<Middle1Display_Tobyman009>();
+
+                towerModel.GetWeapon().rate *= 0.5f;
+            }
+            public override string Icon => "TwinGunsUpgradeIcon";
+            internal class Middle1Display_Tobyman009 : ModDisplay
+            {
+                public override string BaseDisplay => "26a654b46fa1fa6498a4a6e40c93a406";
+                public override void ModifyDisplayNode(UnityDisplayNode node)
+                {
+                    SetMeshTexture(node, Name);
+                    SetMeshTexture(node, Name, 1);
+                    SetMeshOutlineColor(node, new Color(0 / 255, 0 / 255, 0 / 255), 1);
+                }
+            }
+        }
+        public class Middle2_Tobyman009 : ModUpgrade<Tobyman009>
+        {
+            public override int Path => MIDDLE;
+            public override int Tier => 2;
+            public override string DisplayName => "Ultravision";
+            public override string Description => "Enables Super Monkey to shoot slightly further, to see and do more damage to Camo Bloons.";
+            public override int Cost => 1200;
+            public override void ApplyUpgrade(TowerModel towerModel)
+            {
+                towerModel.ApplyDisplay<Middle2Display_Tobyman009>();
+
+                towerModel.AddBehavior(new OverrideCamoDetectionModel("CamoDetect", true));
+                towerModel.towerSelectionMenuThemeId = "Camo";
+                towerModel.GetWeapon().projectile.AddBehavior(Game.instance.model.GetTowerFromId("SuperMonkey-002").GetWeapon().projectile.GetBehavior<DamageModifierForTagModel>().Duplicate());
+
+                towerModel.ignoreBlockers = true; //x-ray ultra monkey knowledge
+                towerModel.GetWeapon().projectile.ignoreBlockers = true;
+                towerModel.GetWeapon().projectile.canCollisionBeBlockedByMapLos = false;
+                towerModel.GetAttackModel().attackThroughWalls = true;
+            }
+            public override string Icon => "UltraVisionUpgradeIcon";
+            internal class Middle2Display_Tobyman009 : ModDisplay
+            {
+                public override string BaseDisplay => "26a654b46fa1fa6498a4a6e40c93a406";
+                public override void ModifyDisplayNode(UnityDisplayNode node)
+                {
+                    SetMeshTexture(node, Name);
+                    SetMeshTexture(node, Name, 1);
+                    SetMeshOutlineColor(node, new Color(0 / 255, 0 / 255, 0 / 255), 1);
+                }
+            }
+        }
+        public class Middle3_Tobyman009 : ModUpgrade<Tobyman009>
+        {
+            public override int Path => MIDDLE;
+            public override int Tier => 3;
+            public override string DisplayName => "Glaive Ricochet";
+            public override string Description => "Glaives will bounce from Bloon to Bloon automatically and aggressively.";
+            public override int Cost => 1200;
+            public override void ApplyUpgrade(TowerModel towerModel)
+            {
+                towerModel.ApplyDisplay<Middle3Display_Tobyman009>();
+
+                towerModel.GetWeapon().projectile.GetBehavior<AgeModel>().lifespan = 2;
+                towerModel.GetWeapon().projectile.pierce = 100; //extra bounce monkey knowledge
+                towerModel.GetWeapon().projectile.AddBehavior(Game.instance.model.GetTowerFromId("BoomerangMonkey-300").GetWeapon().projectile.GetBehavior<RetargetOnContactModel>().Duplicate());
+            }
+            public override string Icon => "GlaiveRicochetUpgradeIcon";
+            internal class Middle3Display_Tobyman009 : ModDisplay
+            {
+                public override string BaseDisplay => "26a654b46fa1fa6498a4a6e40c93a406";
+                public override void ModifyDisplayNode(UnityDisplayNode node)
+                {
+                    SetMeshTexture(node, Name);
+                    SetMeshTexture(node, Name, 1);
+                    SetMeshOutlineColor(node, new Color(0 / 255, 0 / 255, 0 / 255), 1);
+                }
+            }
+        }
+        public class Middle4_Tobyman009 : ModUpgrade<Tobyman009>
+        {
+            public override int Path => MIDDLE;
+            public override int Tier => 4;
+            public override string DisplayName => "Full Auto Rifle";
+            public override string Description => "Fully automatic weapon with incredible popping power.";
+            public override int Cost => 4250;
+            public override void ApplyUpgrade(TowerModel towerModel)
+            {
+                towerModel.ApplyDisplay<Middle4Display_Tobyman009>();
+
+                towerModel.GetWeapon().rate *= 0.25f; //had to make it a bit better so the tower doesn't suck
+                towerModel.GetWeapon().projectile.AddBehavior(Game.instance.model.GetTowerFromId("SniperMonkey-004").GetWeapon().projectile.GetBehavior<DamageModifierForTagModel>().Duplicate());
+            }
+            public override string Icon => "FullAutoRifleUpgradeIcon";
+            internal class Middle4Display_Tobyman009 : ModDisplay
+            {
+                public override string BaseDisplay => "26a654b46fa1fa6498a4a6e40c93a406";
+                public override void ModifyDisplayNode(UnityDisplayNode node)
+                {
+                    SetMeshTexture(node, Name);
+                    SetMeshTexture(node, Name, 1);
+                    SetMeshOutlineColor(node, new Color(0 / 255, 0 / 255, 0 / 255), 1);
+                }
+            }
+        }
+        public class Middle5_Tobyman009 : ModUpgrade<Tobyman009>
+        {
+            public override int Path => MIDDLE;
+            public override int Tier => 5;
+            public override string DisplayName => "Avatar of Wrath";
+            public override string Description => "The more bloons there are, the more damage it does!";
+            public override int Cost => 45000;
+            public override void ApplyUpgrade(TowerModel towerModel)
+            {
+                towerModel.ApplyDisplay<Middle5Display_Tobyman009>();
+
+                towerModel.GetWeapon().rate *= 0.5f;
+                towerModel.GetWeapon().projectile.GetDamageModel().damage += 3;
+                towerModel.GetWeapon().projectile.AddBehavior(Game.instance.model.GetTowerFromId("Druid-005").GetWeapon().projectile.GetBehavior<DamageModifierWrathModel>().Duplicate());
+            }
+            public override string Icon => "AvatarofWrathUpgradeIcon";
+            internal class Middle5Display_Tobyman009 : ModDisplay
+            {
+                public override string BaseDisplay => "26a654b46fa1fa6498a4a6e40c93a406";
+                public override void ModifyDisplayNode(UnityDisplayNode node)
+                {
+                    SetMeshTexture(node, Name);
+                    SetMeshTexture(node, Name, 1);
+                    SetMeshOutlineColor(node, new Color(0 / 255, 0 / 255, 0 / 255), 1);
                 }
             }
         }
