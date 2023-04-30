@@ -632,7 +632,7 @@ public class MiniTowersCollection : BloonsTD6Mod
 
                 towerModel.range = towerModel.GetAttackModel().range += 10;
 
-                towerModel.GetWeapon().projectile.GetDamageModel().damage = 10;
+                towerModel.GetWeapon().projectile.GetDamageModel().damage = 4;
                 towerModel.GetWeapon().projectile.GetDamageModel().immuneBloonProperties = 0;
             }
             internal class Middle2Display_Vasco : ModDisplay
