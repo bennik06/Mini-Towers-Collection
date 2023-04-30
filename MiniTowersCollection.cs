@@ -14,10 +14,10 @@ using Il2CppAssets.Scripts.Models.Towers.Weapons.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors.Attack;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors.Abilities.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors.Emissions;
-using System.Collections.Generic;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors;
-using Il2Cpp;
+using System.Collections.Generic;
 using UnityEngine;
+using Il2Cpp;
 
 [assembly: MelonInfo(typeof(MiniTowersCollection.MiniTowersCollection), ModHelperData.Name, ModHelperData.Version, ModHelperData.RepoOwner)]
 [assembly: MelonGame("Ninja Kiwi", "BloonsTD6")]
@@ -272,13 +272,12 @@ public class MiniTowersCollection : BloonsTD6Mod
             }
         }
     }
-
     public class MrStickmanTower
     {
         public class MrStickman : ModTower<MiniTower>
         {
             public override string BaseTower => "WizardMonkey";
-            public override string DisplayName => "Mr Stickman Tower";
+            public override string DisplayName => "Mr Stickman's Tower";
             public override string Description => "Mr Stickman's personal tower.";
             public override int Cost => 375;
             public override int TopPathUpgrades => 0;
@@ -429,7 +428,7 @@ public class MiniTowersCollection : BloonsTD6Mod
         public class Tobyman009 : ModTower<MiniTower>
         {
             public override string BaseTower => "SniperMonkey";
-            public override string DisplayName => "Tobyman009 Tower";
+            public override string DisplayName => "Tobyman009's Tower";
             public override string Description => "Tobyman009's personal tower.";
             public override int Cost => 350;
             public override int TopPathUpgrades => 0;
@@ -573,6 +572,202 @@ public class MiniTowersCollection : BloonsTD6Mod
                     SetMeshTexture(node, Name);
                     SetMeshTexture(node, Name, 1);
                     SetMeshOutlineColor(node, new Color(0 / 255, 0 / 255, 0 / 255), 1);
+                }
+            }
+        }
+    }
+    public class VascoTower
+    {
+        public class Vasco : ModTower<MiniTower>
+        {
+            public override string BaseTower => "DartMonkey";
+            public override string DisplayName => "vasco's Tower";
+            public override string Description => "vasco's personal tower.";
+            public override int Cost => 200;
+            public override int TopPathUpgrades => 0;
+            public override int MiddlePathUpgrades => 5;
+            public override int BottomPathUpgrades => 0;
+            public override void ModifyBaseTowerModel(TowerModel towerModel) { }
+            public override string Icon => VanillaSprites.DartMonkey000;
+            public override string Portrait => VanillaSprites.DartMonkey000;
+        }
+        public class Middle1_Vasco : ModUpgrade<Vasco>
+        {
+            public override int Path => MIDDLE;
+            public override int Tier => 1;
+            public override string DisplayName => "Better Darts";
+            public override string Description => "Doubles the damage and the speed.";
+            public override int Cost => 500;
+            public override void ApplyUpgrade(TowerModel towerModel)
+            {
+                towerModel.ApplyDisplay<Middle1Display_Vasco>();
+
+                towerModel.GetWeapon().rate /= 2;
+                towerModel.GetWeapon().projectile.GetDamageModel().damage = 2;
+            }
+            internal class Middle1Display_Vasco : ModDisplay
+            {
+                public override string BaseDisplay => "303631384c6f454408d3c4fd48c7ecf4";
+                public override void ModifyDisplayNode(UnityDisplayNode node)
+                {
+                    SetMeshTexture(node, Name);
+                    SetMeshTexture(node, Name, 1);
+                    SetMeshTexture(node, Name, 2);
+                }
+            }
+        }
+        public class Middle2_Vasco : ModUpgrade<Vasco>
+        {
+            public override int Path => MIDDLE;
+            public override int Tier => 2;
+            public override string DisplayName => "Educated Monkey";
+            public override string Description => "Gains camo detection and lead popping power.";
+            public override int Cost => 1500;
+            public override void ApplyUpgrade(TowerModel towerModel)
+            {
+                towerModel.ApplyDisplay<Middle2Display_Vasco>();
+
+                towerModel.AddBehavior(new OverrideCamoDetectionModel("OverrideCamoDetectionModel", true));
+                towerModel.towerSelectionMenuThemeId = "Camo";
+
+                towerModel.range = towerModel.GetAttackModel().range += 10;
+
+                towerModel.GetWeapon().projectile.GetDamageModel().damage = 10;
+                towerModel.GetWeapon().projectile.GetDamageModel().immuneBloonProperties = 0;
+            }
+            internal class Middle2Display_Vasco : ModDisplay
+            {
+                public override string BaseDisplay => "971b7733796fca8408f7f68a21e0797c";
+                public override void ModifyDisplayNode(UnityDisplayNode node)
+                {
+                    SetMeshTexture(node, Name);
+                    SetMeshTexture(node, Name, 1);
+                    SetMeshTexture(node, Name, 2);
+                }
+            }
+        }
+        public class Middle3_Vasco : ModUpgrade<Vasco>
+        {
+            public override int Path => MIDDLE;
+            public override int Tier => 3;
+            public override string DisplayName => "Deadly Precision";
+            public override string Description => "20 damage per shot, plus bonus damage to Ceramics.";
+            public override int Cost => 6000;
+            public override void ApplyUpgrade(TowerModel towerModel)
+            {
+                towerModel.ApplyDisplay<Middle3Display_Vasco>();
+
+                towerModel.GetWeapon().projectile.GetDamageModel().damage = 20;
+                towerModel.GetWeapon().projectile.AddBehavior(Game.instance.model.GetTowerFromId("SniperMonkey-300").GetWeapon().projectile.GetBehavior<DamageModifierForTagModel>().Duplicate());
+            }
+            internal class Middle3Display_Vasco : ModDisplay
+            {
+                public override string BaseDisplay => "971b7733796fca8408f7f68a21e0797c";
+                public override void ModifyDisplayNode(UnityDisplayNode node)
+                {
+                    SetMeshTexture(node, Name);
+                    SetMeshTexture(node, Name, 1);
+                    SetMeshTexture(node, Name, 2);
+                }
+            }
+        }
+        public class Middle4_Vasco : ModUpgrade<Vasco>
+        {
+            public override int Path => MIDDLE;
+            public override int Tier => 4;
+            public override string DisplayName => "Laser Crossbow";
+            public override string Description => "Shoots high pierce laser darts at a high rate.";
+            public override int Cost => 18000;
+            public override void ApplyUpgrade(TowerModel towerModel)
+            {
+                towerModel.ApplyDisplay<Middle4Display_Vasco>();
+
+                towerModel.range = towerModel.GetAttackModel().range += 15;
+
+                towerModel.GetWeapon().projectile.ApplyDisplay<Middle4Projectile_Vasco>();
+
+                towerModel.GetWeapon().ejectX = -1.5f;
+                towerModel.GetWeapon().ejectY = 4.83f;
+                towerModel.GetWeapon().ejectZ = 9.0f;
+
+                towerModel.GetWeapon().projectile.GetBehavior<TravelStraitModel>().lifespan = 0.75f;
+
+                towerModel.GetWeapon().rate /= 2;
+                towerModel.GetWeapon().projectile.pierce = 15;
+                towerModel.GetWeapon().projectile.GetDamageModel().damage = 40;
+            }
+            internal class Middle4Display_Vasco : ModDisplay
+            {
+                public override string BaseDisplay => "f7a1b5c14ded01146b80bd7121f3fcd7";
+                public override void ModifyDisplayNode(UnityDisplayNode node)
+                {
+                    SetMeshTexture(node, Name);
+                    SetMeshTexture(node, Name, 1);
+                    SetMeshTexture(node, Name, 2);
+                    SetMeshTexture(node, Name, 3);
+                }
+            }
+            internal class Middle4Projectile_Vasco : ModDisplay
+            {
+                public override string BaseDisplay => "6c11e1432d6321c44b216600b2cdbac6";
+                public override void ModifyDisplayNode(UnityDisplayNode node)
+                {
+                    Set2DTexture(node, Name);
+                }
+            }
+        }
+        public class Middle5_Vasco : ModUpgrade<Vasco>
+        {
+            public override int Path => MIDDLE;
+            public override int Tier => 5;
+            public override string DisplayName => "Ultra-Juggernaut";
+            public override string Description => "Gigantic spiked ball splits twice into 6 Juggernaut balls for even more destructive power against Ceramic and Fortified Bloons.";
+            public override int Cost => 50000;
+            public override void ApplyUpgrade(TowerModel towerModel)
+            {
+                towerModel.RemoveBehavior<AttackModel>();
+                towerModel.AddBehavior(Game.instance.model.GetTowerFromId("DartMonkey-500").GetBehavior<AttackModel>().Duplicate());
+
+                towerModel.ApplyDisplay<Middle5Display_Vasco>();
+
+                towerModel.GetWeapon().projectile.ApplyDisplay<Middle5Projectile_Vasco>();
+                towerModel.GetWeapon().projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.ApplyDisplay<Middle5Projectile2_Vasco>();
+
+                towerModel.AddBehavior(new OverrideCamoDetectionModel("OverrideCamoDetectionModel", true));
+                towerModel.towerSelectionMenuThemeId = "Camo";
+
+                towerModel.range = towerModel.GetAttackModel().range = 75;
+                towerModel.GetWeapon().rate = 0.2f;
+                towerModel.GetWeapon().projectile.pierce *= 2;
+                towerModel.GetWeapon().projectile.GetDamageModel().damage = 100;
+
+                towerModel.GetWeapon().projectile.RemoveBehavior<DamageModifierForTagModel>();
+                towerModel.GetWeapon().projectile.AddBehavior(Game.instance.model.GetTowerFromId("SniperMonkey-300").GetWeapon().projectile.GetBehavior<DamageModifierForTagModel>().Duplicate());   
+            }
+            internal class Middle5Display_Vasco : ModDisplay
+            {
+                public override string BaseDisplay => "b194c58ed09f1aa468e935b453c6843c";
+                public override void ModifyDisplayNode(UnityDisplayNode node)
+                {
+                    SetMeshTexture(node, Name);
+                    SetMeshTexture(node, Name, 1);
+                    SetMeshOutlineColor(node, new Color(0 / 255, 0 / 255, 0 / 255), 1);
+                }
+            }
+            internal class Middle5Projectile_Vasco : ModDisplay
+            {
+                public override string BaseDisplay => "c4b8e7aa3e07d764fb9c3c773ceec2ab";
+                public override void ModifyDisplayNode(UnityDisplayNode node)
+                {
+                    SetMeshTexture(node, Name);
+                }
+            }
+            internal class Middle5Projectile2_Vasco : ModDisplay
+            {
+                public override string BaseDisplay => "ee74983d627954e4e9765d86e05b4500";
+                public override void ModifyDisplayNode(UnityDisplayNode node)
+                {
+                    SetMeshTexture(node, Name);
                 }
             }
         }
