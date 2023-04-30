@@ -10,6 +10,8 @@ This BTD6 mod adds custom towers and a new tower category to the game.
 Included towers:
 - Upgradeable Legend of the Night
 - Mr Stickman's personal tower
+- Tobyman009's personal tower
+- vasco's personal tower
 
 More towers will be added soon!
 
